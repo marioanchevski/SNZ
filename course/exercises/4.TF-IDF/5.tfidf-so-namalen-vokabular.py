@@ -1,5 +1,6 @@
-from frameworks.document_classification import *
-import math
+from frameworks.tfidf2 import *
+import operator
+
 train_data = [
     ("""What Are We Searching for on Mars?
 Martians terrified me growing up. I remember watching the 1996 movie Mars Attacks! and fearing that the Red Planet harbored hostile alien neighbors. Though I was only 6 at the time, I was convinced life on Mars meant little green men wielding vaporizer guns. There was a time, not so long ago, when such an assumption about Mars wouldn’t have seemed so far-fetched.
@@ -63,36 +64,32 @@ Jordan came off the bench Sunday and tied a career high by scoring 24 points to 
      , "sport"),
     ("""Five-time world player of the year Marta scored three goals to lead Brazil to a 3-2 come-from-behind win over the U.S. women's soccer team in the International Tournament of Brasilia on Sunday. Carli Lloyd and Megan Rapinoe scored a goal each in the first 10 minutes to give the U.S. an early lead, but Marta netted in the 19th, 55th and 66th minutes to guarantee the hosts a spot in the final of the four-team competition.
 """
-     , "sport"),
-]
-
-
-if __name__ == "__main__":
-
-    klasifikator = NaiveBayes(get_words)
-    for row in train_data:
-        dokument = row[0]
-        klasa = row[1]
-        klasifikator.train(dokument, klasa)
-
-    recenica = input()
-
-
-    words = get_words(recenica)
-    words = list(words)
-    words.sort()
-
-    for word in words:
-        tezinska_ver = round(klasifikator.weighted_probability(word, 'science',klasifikator.get_feature_per_category_probability), 5)
-        print(word, 'science', round(klasifikator.get_feature_per_category_probability(word, 'science'), 5), tezinska_ver)
-        tezinska_ver = round(klasifikator.weighted_probability(word, 'sport', klasifikator.get_feature_per_category_probability), 5)
-        print(word, 'sport', round(klasifikator.get_feature_per_category_probability(word, 'sport'), 5), tezinska_ver)
-
-
-    #verojatnost so koja se predviduva kategorijata da e za dokumentot
-    ver = round(math.log2(klasifikator.get_category_probability_for_document(recenica, klasifikator.classify_document(recenica))), 5)
-    print(klasifikator.classify_document(recenica), ver)
+     , "sport")
+] #(doc, class)
 
 
 
+if __name__ == '__main__':
+    text = input()
+    docs = []
+    for item in train_data:
+        docs.append(item[0])
 
+    df = calculate_document_frequencies(docs)
+    words = []
+    for key, value in df.items():
+        words.append((key, value))
+    vocab = sorted(words, key=operator.itemgetter(1), reverse=True)
+    vocab = vocab[100:]
+
+    final_vocab =[]
+    for item in vocab:
+        final_vocab.append(item[0])
+
+    cos = rank_documents(text, docs,final_vocab, cosine)[:5]
+    pear = rank_documents(text, docs,final_vocab, pearson)[:5]
+
+    for i, i_cos, i_pear in zip(range(5), cos, pear):
+        c_index = i_cos[1]
+        p_index = i_pear[1]
+        print(f'Rang po slicnost:{i} Cosine-Document #{c_index} Pearson-Document #{p_index}')

@@ -1,4 +1,4 @@
-from decision_tree_learning import *
+from frameworks.decision_tree_learning import *
 trainingData = [
     [6.3, 2.9, 5.6, 1.8, 'I. virginica'],
     [6.5, 3.0, 5.8, 2.2, 'I. virginica'],

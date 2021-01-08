@@ -1,5 +1,4 @@
-from decision_tree_learning import *
-import math
+from frameworks.decision_tree_learning import *
 import operator
 from math import log10
 log2 = lambda x: log10(x)/log10(2)

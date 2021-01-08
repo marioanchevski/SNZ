@@ -1,4 +1,4 @@
-from decision_tree_learning import *
+from frameworks.decision_tree_learning import *
 import operator
 
 data = [[180.0, 23.6, 25.2, 27.9, 25.4, 14.0, 'Roach'],

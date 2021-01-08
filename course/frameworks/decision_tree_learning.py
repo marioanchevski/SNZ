@@ -166,7 +166,7 @@ def build_tree(rows, scoref=entropy):
     :param scoref: функција за одбирање на најдобар атрибут во даден чекор
     :type scoref: function
     :return: коренот на изграденото дрво на одлука
-    :rtype: DecisionNode object
+    :rtype: DecisionNode objectimport math
     """
     if len(rows) == 0:
         return DecisionNode()

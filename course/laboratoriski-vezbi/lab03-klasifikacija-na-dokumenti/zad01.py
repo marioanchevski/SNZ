@@ -1,4 +1,4 @@
-from document_classification import *
+from frameworks.document_classification import *
 
 train_data = [
     ("""What Are We Searching for on Mars?

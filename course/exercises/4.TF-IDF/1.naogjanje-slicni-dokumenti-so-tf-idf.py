@@ -1,4 +1,5 @@
-from frameworks.document_classification import *
+from frameworks.tfidf import *
+
 train_data=[
 ("""What Are We Searching for on Mars?
 Martians terrified me growing up. I remember watching the 1996 movie Mars Attacks! and fearing that the Red Planet harbored hostile alien neighbors. Though I was only 6 at the time, I was convinced life on Mars meant little green men wielding vaporizer guns. There was a time, not so long ago, when such an assumption about Mars wouldn’t have seemed so far-fetched.
@@ -62,43 +63,27 @@ Jordan came off the bench Sunday and tied a career high by scoring 24 points to 
 ,"sport"),
 ("""Five-time world player of the year Marta scored three goals to lead Brazil to a 3-2 come-from-behind win over the U.S. women's soccer team in the International Tournament of Brasilia on Sunday. Carli Lloyd and Megan Rapinoe scored a goal each in the first 10 minutes to give the U.S. an early lead, but Marta netted in the 19th, 55th and 66th minutes to guarantee the hosts a spot in the final of the four-team competition.
 """
-,"sport"),
-]
+,"sport")
+]  #(doc, class)
 
+def get_documents(data):
+    docs = []
+    for item in data:
+       docs.append(item[0])
+    return docs
 
-words_to_ignore=['and', 'are', 'for', 'was', 'what', 'when', 'who', 'but', 'from', 'after', 'out', 'our', 'my', 'the', 'with', 'some', 'not', 'this', 'that']
+if __name__ == '__main__':
+    text = input()
+    docs = get_documents(train_data)
 
-def get_words_with_ignrore(doc, forbidden_words=None):
-    words = set()
-    for word in re.split('\\W+', doc):
-        if 2 < len(word) < 20:
-            if forbidden_words is not None and word.lower() not in words_to_ignore:
-                words.add(word.lower())
-    return words
+    cos = rank_documents(text, docs, cosine)[:4]
+    pir = rank_documents(text, docs, pearson)[:4]
 
-
-if __name__ == "__main__":
-    recenica = input()
-    # vashiot kod tuka
-
-    classifier1 = NaiveBayes(get_words)
-    classifier2 = NaiveBayes(lambda x: get_words_with_ignrore(x, words_to_ignore))
-
-    for item in train_data:
-        docum = item[0]
-        cat = item[1]
-        classifier1.train(docum, cat)
-        classifier2.train(docum, cat)
-
-    predicted_first = classifier1.classify_document(recenica)
-    predicted_second = classifier2.classify_document(recenica)
-
-    print(predicted_first)
-    print(predicted_second)
-
-    if predicted_first != predicted_second:
-        print("kontradikcija")
-
-
-
-
+    counter = 0
+    for i, r_cos, r_pir in zip(range(4), cos, pir):
+        cos_index = r_cos[1]
+        pir_index = r_pir[1]
+        if cos_index == pir_index:
+            counter += 1
+        print(f'Rang po slicnost:{i} Cosine-Document #{cos_index} Pearson-Document #{pir_index}')
+    print(f'Dvete metriki davaat ist rezultat:{counter==4}')
