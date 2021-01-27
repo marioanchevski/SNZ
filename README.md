@@ -2,4 +2,6 @@
 ___
 [_Колоквиум 1_](https://github.com/marioanchevski/SNZ/tree/master/course/kolokviumi/kolokvium1
 "are you ready son?")
+[_Колоквиум 2_](https://github.com/marioanchevski/SNZ/tree/master/course/kolokviumi/kolokvium2 "resenie na 2rite zadaci")
+
 
