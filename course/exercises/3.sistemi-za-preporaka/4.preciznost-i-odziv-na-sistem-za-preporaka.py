@@ -2556,7 +2556,6 @@ if __name__ == '__main__':
         brojach += 1
 
 
-
     preciznost = []
     odziv = []
 
