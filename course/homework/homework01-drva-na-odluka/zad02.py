@@ -1,3 +1,24 @@
+"""
+Дадено е податочно множество од риби кое е опишано со следните атрибути:
+
+    0  Weight      Weight of the fish (in grams)
+    1  Length1     Length from the nose to the beginning of the tail (in cm)
+    2  Length2     Length from the nose to the notch of the tail (in cm)
+    3  Length3     Length from the nose to the end of the tail (in cm)
+    4  Height%     Maximal height as % of Length3
+    5  Width%      Maximal width as % of Length3
+    6  Class       Fish Species
+Класата (видот на рибата) е дадена во последната колона.
+
+Да се направи модел за класификација за даденото податочно множество.
+За тренинг да се земат само првите 40 примероци од класите Roach и Pike (Првите 40 од Roach и првите 40 од Pike).
+Значи треба да се направи бинарен класификатор, при што секоја класа освен _Roach_ и _Pike_ се игнорира при тренирањето на множеството.
+Притоа земањето на првите 40 примероци да се направи во програмата, а не со рачно копирање!
+Ако во множеството има помалку од 40 примероци од дадена класа, се земаат онолку колку што има (т.е. сите што ги има).
+
+Да се класифицира елементот даден на влез и да се испечати предвидувањето.
+"""
+
 from frameworks.decision_tree_learning import *
 import operator
 from math import log10
